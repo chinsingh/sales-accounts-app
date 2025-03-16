@@ -49,15 +49,12 @@ router.post("/login", async (req: Request, res: Response) => {
       res.status(400).json({ error: "Email and password are required" });
       return;
     }
-    
-    req.session.regenerate( (err)=>{});
 
     const user = await userRepository.getUserByEmail(email);
     if (!user) {
       res.status(401).json({ error: "Invalid credentials" });
       return;
     }
-    
 
     const passwordMatch = await bcrypt.compare(password, user.password_hash);
     if (!passwordMatch) {
