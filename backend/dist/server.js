@@ -30,6 +30,7 @@ app.use(session({
     cookie: {
         httpOnly: true,
         sameSite: 'none',
+        secure: true,
         maxAge: 432000000 //5 days
     },
     store: sessionStore,
