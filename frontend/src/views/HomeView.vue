@@ -120,7 +120,7 @@
 
   onBeforeMount(async ()=>{
     try {
-      const apiUrl = `${import.meta.env.BACKEND_BASE_URL}/api/v1/accounts/count`;
+      const apiUrl = `${apiConfig.baseUrl}/api/v1/accounts/count`;
       const response: AxiosResponse<CountResponse> = await axios.get(apiUrl, {withCredentials: true});
       totalRecords.value = response.data.count;
     } catch (error) {
@@ -131,7 +131,7 @@
 
 const logOut = async ()=>{
     try {
-      const apiUrl = `${import.meta.env.BACKEND_BASE_URL}/api/v1/user/logout`;
+      const apiUrl = `${apiConfig.baseUrl}/api/v1/user/logout`;
       const response: AxiosResponse<any> = await axios.get(apiUrl, {
         withCredentials: true
       });
@@ -164,7 +164,7 @@ const toggleMenu = (event: any) => {
 //Pagination Logic
 const url = computed(
   () =>
-    `${import.meta.env.BACKEND_BASE_URL}/api/v1/accounts?limit=${limit.value}&offset=${offset.value}`
+    `${apiConfig.baseUrl}/api/v1/accounts?limit=${limit.value}&offset=${offset.value}`
 );
 
 const page = ref(0);

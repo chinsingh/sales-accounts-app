@@ -64,7 +64,6 @@ const router = useRouter();
 
 const email = ref('');
 const password = ref('');
-const rememberMe = ref(false);
 const isLoggingIn = ref(false);
 const errorMessage = ref('');
 
@@ -107,7 +106,7 @@ const login = async (): Promise<void> => {
       password: password.value
     };
 
-    const apiUrl = `${import.meta.env.BACKEND_BASE_URL}/api/v1/auth/login`;
+    const apiUrl = `${apiConfig.baseUrl}/api/v1/auth/login`;
     const response: AxiosResponse<any> = await axios.post(apiUrl, loginData, {
       withCredentials: true
     });
