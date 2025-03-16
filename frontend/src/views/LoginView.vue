@@ -107,7 +107,7 @@ const login = async (): Promise<void> => {
       password: password.value
     };
 
-    const apiUrl = `${apiConfig.baseUrl}/api/v1/user/login`;
+    const apiUrl = `${apiConfig.baseUrl}/api/v1/auth/login`;
     const response: AxiosResponse<any> = await axios.post(apiUrl, loginData, {
       withCredentials: true
     });

@@ -120,7 +120,7 @@
 
   onBeforeMount(async ()=>{
     try {
-      const apiUrl = `${apiConfig.baseUrl}/api/v1/user/count`;
+      const apiUrl = `${apiConfig.baseUrl}/api/v1/accounts/count`;
       const response: AxiosResponse<CountResponse> = await axios.get(apiUrl, {withCredentials: true});
       totalRecords.value = response.data.count;
     } catch (error) {

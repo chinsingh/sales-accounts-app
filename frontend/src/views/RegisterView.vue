@@ -83,7 +83,7 @@ export default {
           password: this.password
         }
 
-        const apiUrl = `${apiConfig.baseUrl}/api/v1/user/register`;
+        const apiUrl = `${apiConfig.baseUrl}/api/v1/auth/register`;
         const response: AxiosResponse<any> = await axios.post(apiUrl, registrationData);
         this.$router.push('/login');
 
