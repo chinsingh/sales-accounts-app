@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "target": "es2020", // or "esnext" for the latest features
+      "module": "esnext", // Use ES modules
+      "moduleResolution": "node", // Required for ES modules in Node.js
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "strict": true,
+      "esModuleInterop": true, // Essential for compatibility with CommonJS modules
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "sourceMap": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true, // Required for ES modules
+      "allowJs": true, // if you want to allow javascript files in your project.
+      "lib": ["es2020", "dom", "esnext.asynciterable"] // add dom if you are using browser related features.
+    },
+    "include": ["src/**/*"]
+  }
