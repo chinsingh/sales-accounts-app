@@ -9,7 +9,7 @@
           <div class="card shadow-lg">
             <div class="card-body p-5">
               <h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
-              <form @submit.prevent="register" class="needs-validation" novalidate="" autocomplete="off">
+              <form @submit.prevent="register" class="needs-validation"  autocomplete="off">
 
                 <div class="mb-3">
                   <label class="mb-2 text-muted" for="email">E-Mail Address</label>
@@ -88,7 +88,7 @@ export default {
         this.$router.push('/login');
 
         alert('Registration successful! You can now login.');
-      } catch (error) {
+      } catch (error:any) {
         console.error('Registration error:', error);
         alert('Registration failed: ' + (error.message || 'Unknown error'));
       } finally {
@@ -101,24 +101,24 @@ export default {
 
       // Email validation
       if (!this.email || !this.validateEmail(this.email)) {
-        document.getElementById('email').classList.add('is-invalid');
+        document.getElementById('email')?.classList.add('is-invalid');
         isValid = false;
       } else {
-        document.getElementById('email').classList.remove('is-invalid');
+        document.getElementById('email')?.classList.remove('is-invalid');
       }
 
       // Password validation
       if (!this.password) {
-        document.getElementById('password').classList.add('is-invalid');
+        document.getElementById('password')?.classList.add('is-invalid');
         isValid = false;
       } else {
-        document.getElementById('password').classList.remove('is-invalid');
+        document.getElementById('password')?.classList.remove('is-invalid');
       }
 
       return isValid;
     },
 
-    validateEmail(email) {
+    validateEmail(email: string) {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return re.test(email);
     }
