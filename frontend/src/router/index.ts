@@ -32,7 +32,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   try {
     // Try to validate the session
-    const apiUrl = "http://localhost:8080/api/auth/validate-session";
+    const apiUrl = `${import.meta.env.BACKEND_BASE_URL}/api/v1/auth/validate-session`;
     const response = await axios.get(apiUrl, { withCredentials: true });
 
     // If session is valid and trying to access login page, redirect to home
