@@ -1,4 +1,4 @@
-import sfAccounts from "../services/sf-accounts.service.js";
+import sfAccounts from "../services/sf-accounts.service";
 import express from "express";
 const router = express.Router();
 router.get("/", async (req, res) => {

@@ -10,19 +10,18 @@ import pg from 'connect-pg-simple';
 dotenv.config();
 
 const app = express();
-app.use(express.json());
 
 //cors
-const allowedOrigins = process.env.FRONTEND_URL? [process.env.FRONTEND_URL] : [];
+// const allowedOrigins = process.env.FRONTEND_URL? [process.env.FRONTEND_URL] : [];
 const corsOptions: cors.CorsOptions = {
-  origin: allowedOrigins,
+  origin: process.env.FRONTEND_URL,
   credentials: true,
   methods: ["GET", "POST", "DELETE"],
   allowedHeaders: ["Content-Type"],
 };
 app.use(cors(corsOptions));
 
-
+app.use(express.json());
 //session
 const PostgresqlStore = pg(session);
 const sessionStore = new PostgresqlStore({
