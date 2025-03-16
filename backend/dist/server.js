@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import authRouter from "./routes/auth.route.js";
-import accountsRouter from "./routes/accounts.route.js";
-import testRouter from "./routes/test.route.js";
+import authRouter from "./routes/auth.route";
+import accountsRouter from "./routes/accounts.route";
+import testRouter from "./routes/test.route";
 import session from 'express-session';
 import pg from 'connect-pg-simple';
 dotenv.config();
@@ -28,7 +28,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie: {
-        secure: false,
+        secure: true,
         maxAge: 432000000 //5 days
     },
     store: sessionStore,
