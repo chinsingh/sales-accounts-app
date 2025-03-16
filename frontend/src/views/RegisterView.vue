@@ -57,7 +57,7 @@
 
 import axios, { type AxiosResponse } from "axios";
 import { type UserData } from '../models/user.model';
-import apiConfig from '../../backend.config.json' assert { type: "json" };
+import apiConfig from '../../backend.config.json';
 
 export default {
   name: 'RegisterView',

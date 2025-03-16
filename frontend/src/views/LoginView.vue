@@ -58,7 +58,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios, { type AxiosResponse } from "axios";
 import { type UserData } from '../models/user.model';
-import apiConfig from '../../backend.config.json' assert { type: "json" };
+import apiConfig from '../../backend.config.json';
 
 const router = useRouter();
 

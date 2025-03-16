@@ -94,7 +94,7 @@
   import axios, { type AxiosResponse } from 'axios';
   import { useRouter } from 'vue-router';
   import { type Account, type CountResponse } from '../models/accounts.model';
-  import apiConfig from '../../backend.config.json' assert { type: "json" };
+  import apiConfig from '../../backend.config.json';
 
 
   //prime vue components
