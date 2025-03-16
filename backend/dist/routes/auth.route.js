@@ -1,7 +1,7 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
-import userRepository from "../repositories/user.repository";
+import userRepository from "../repositories/user.repository.js";
 dotenv.config();
 const router = express.Router();
 router.post("/register", async (req, res) => {
