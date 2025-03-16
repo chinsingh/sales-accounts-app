@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import axios from 'axios'
+import { BACKEND_BASE_URL } from '@/constants'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,7 +33,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   try {
     // Try to validate the session
-    const apiUrl = `${import.meta.env.BACKEND_BASE_URL}/api/v1/auth/validate-session`;
+    const apiUrl = `${BACKEND_BASE_URL}/api/v1/auth/validate-session`;
     const response = await axios.get(apiUrl, { withCredentials: true });
 
     // If session is valid and trying to access login page, redirect to home

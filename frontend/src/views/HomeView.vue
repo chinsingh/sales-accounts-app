@@ -94,7 +94,7 @@
   import axios, { type AxiosResponse } from 'axios';
   import { useRouter } from 'vue-router';
   import { type Account, type CountResponse } from '../models/accounts.model';
-  import apiConfig from '../../backend.config.json';
+  import { BACKEND_BASE_URL } from '../constants';
 
 
   //prime vue components
@@ -120,7 +120,7 @@
 
   onBeforeMount(async ()=>{
     try {
-      const apiUrl = `${apiConfig.baseUrl}/api/v1/accounts/count`;
+      const apiUrl = `${BACKEND_BASE_URL}/api/v1/accounts/count`;
       const response: AxiosResponse<CountResponse> = await axios.get(apiUrl, {withCredentials: true});
       totalRecords.value = response.data.count;
     } catch (error) {
@@ -131,7 +131,7 @@
 
 const logOut = async ()=>{
     try {
-      const apiUrl = `${apiConfig.baseUrl}/api/v1/user/logout`;
+      const apiUrl = `${BACKEND_BASE_URL}/api/v1/user/logout`;
       const response: AxiosResponse<any> = await axios.get(apiUrl, {
         withCredentials: true
       });
@@ -164,7 +164,7 @@ const toggleMenu = (event: any) => {
 //Pagination Logic
 const url = computed(
   () =>
-    `${apiConfig.baseUrl}/api/v1/accounts?limit=${limit.value}&offset=${offset.value}`
+    `${BACKEND_BASE_URL}/api/v1/accounts?limit=${limit.value}&offset=${offset.value}`
 );
 
 const page = ref(0);
