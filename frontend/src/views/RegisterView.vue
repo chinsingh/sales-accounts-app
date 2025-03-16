@@ -57,7 +57,7 @@
 
 import axios, { type AxiosResponse } from "axios";
 import { type UserData } from '../models/user.model';
-
+import apiConfig from '../../backend.config.json' assert { type: "json" };
 
 export default {
   name: 'RegisterView',
@@ -83,7 +83,7 @@ export default {
           password: this.password
         }
 
-        const apiUrl = `${import.meta.env.BACKEND_BASE_URL}/api/v1/user/register`;
+        const apiUrl = `${apiConfig.baseUrl}/api/v1/user/register`;
         const response: AxiosResponse<any> = await axios.post(apiUrl, registrationData);
         this.$router.push('/login');
 

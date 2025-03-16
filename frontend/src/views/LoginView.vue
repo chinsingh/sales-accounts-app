@@ -58,6 +58,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios, { type AxiosResponse } from "axios";
 import { type UserData } from '../models/user.model';
+import apiConfig from '../../backend.config.json' assert { type: "json" };
 
 const router = useRouter();
 
@@ -106,7 +107,7 @@ const login = async (): Promise<void> => {
       password: password.value
     };
 
-    const apiUrl = `${import.meta.env.BACKEND_BASE_URL}/api/v1/user/login`;
+    const apiUrl = `${apiConfig.baseUrl}/api/v1/user/login`;
     const response: AxiosResponse<any> = await axios.post(apiUrl, loginData, {
       withCredentials: true
     });
