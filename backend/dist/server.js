@@ -35,9 +35,9 @@ app.use(session({
     },
     store: sessionStore,
 }));
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/accounts", accountsRouter);
-app.use("/api/v1/test", testRouter);
+app.use("/v1/auth", authRouter);
+app.use("/v1/accounts", accountsRouter);
+app.use("/v1/test", testRouter);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 //# sourceMappingURL=server.js.map
