@@ -34,9 +34,10 @@ app.use(
     resave: true,
     saveUninitialized: true,
     cookie: { 
+      domain: 'onrender.com',
       httpOnly: true, 
-      sameSite: 'none',
-      secure: true,
+      sameSite: 'lax',
+      secure: false,
       maxAge: 432000000 //5 days
     }, 
     store: sessionStore,
