@@ -17,7 +17,8 @@ const corsOptions: cors.CorsOptions = {
   origin: process.env.FRONTEND_URL,
   credentials: true,
   methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Set-Cookie"]
 };
 app.use(cors(corsOptions));
 
@@ -33,7 +34,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET ?? "",
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: { 
       httpOnly: true, 
       sameSite: 'none',
