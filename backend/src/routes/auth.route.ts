@@ -2,13 +2,27 @@ import express, {Request, Response} from "express";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import userRepository from "../repositories/user.repository.js";
+import { check, validationResult } from "express-validator";
 
 dotenv.config();
 
 const router = express.Router();
 
 
-router.post("/register", async (req: Request, res: Response) => {
+const inputValidate = [
+  check("email", "Invalid email address")
+    .isEmail()
+    .trim()
+    .escape()
+    .normalizeEmail(),
+  check("password")
+    .trim()
+    .escape(),
+];
+
+
+
+router.post("/register", inputValidate, async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     
@@ -17,7 +31,12 @@ router.post("/register", async (req: Request, res: Response) => {
       return;
     }
     
-    // Check if user already exists
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
     const existingUser = await userRepository.getUserByEmail(email);
     if (existingUser) {
       res.status(409).json({ error: "User with this email already exists" });
@@ -40,16 +59,21 @@ router.post("/register", async (req: Request, res: Response) => {
 });
 
 
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/login", inputValidate, async (req: Request, res: Response) => {
   try {
-    const { email, password , rememberMe} = req.body;
+    const { email, password } = req.body;
     
 
     if (!email || !password) {
       res.status(400).json({ error: "Email and password are required" });
       return;
     }
-
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
     const user = await userRepository.getUserByEmail(email);
     if (!user) {
       res.status(401).json({ error: "Invalid credentials" });
