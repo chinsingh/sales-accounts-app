@@ -37,8 +37,8 @@ app.use(
     saveUninitialized: true,
     cookie: { 
       httpOnly: true, 
-      sameSite: true,
-      secure: false,
+      sameSite: false,
+      secure: true,
       maxAge: 432000000 //5 days
     }, 
     store: sessionStore,
