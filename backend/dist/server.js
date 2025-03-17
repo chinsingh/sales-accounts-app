@@ -22,9 +22,11 @@ app.use(express.json());
 app.set("trust proxy", true);
 //other security measures
 app.disable('x-powered-by');
+//since the service is behind a proxy, this constitutes a global rate limiting to prevent salesforce API limit from breaching
+//even though the rate limit is imposed on a per IP basis - in this case it will be IP of the proxy making it global
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: parseInt(process.env.API_LIMIT ?? '100'), // for each IP, default 100
+    limit: parseInt(process.env.API_LIMIT ?? '100'), // default 100
     standardHeaders: "draft-8",
     legacyHeaders: false,
 });

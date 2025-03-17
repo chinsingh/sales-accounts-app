@@ -2,16 +2,31 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import userRepository from "../repositories/user.repository.js";
+import { check, validationResult } from "express-validator";
 dotenv.config();
 const router = express.Router();
-router.post("/register", async (req, res) => {
+const inputValidate = [
+    check("email", "Invalid email address")
+        .isEmail()
+        .trim()
+        .escape()
+        .normalizeEmail(),
+    check("password")
+        .trim()
+        .escape(),
+];
+router.post("/register", inputValidate, async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
             res.status(400).json({ error: "Email and password are required" });
             return;
         }
-        // Check if user already exists
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.status(422).json({ errors: errors.array() });
+            return;
+        }
         const existingUser = await userRepository.getUserByEmail(email);
         if (existingUser) {
             res.status(409).json({ error: "User with this email already exists" });
@@ -29,11 +44,16 @@ router.post("/register", async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
-router.post("/login", async (req, res) => {
+router.post("/login", inputValidate, async (req, res) => {
     try {
-        const { email, password, rememberMe } = req.body;
+        const { email, password } = req.body;
         if (!email || !password) {
             res.status(400).json({ error: "Email and password are required" });
+            return;
+        }
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.status(422).json({ errors: errors.array() });
             return;
         }
         const user = await userRepository.getUserByEmail(email);
@@ -69,30 +89,6 @@ router.get("/logout", function (req, res, next) {
         });
         res.status(200).json(({ message: "Logged out" }));
     });
-});
-router.delete("/", async function (req, res, next) {
-    if (!req.session.user) {
-        //Session Invalid
-        res.status(401).json({ error: "Unauthorized" });
-        return;
-    }
-    try {
-        const isDeleted = await userRepository.getUserByEmail(req.session.user.email);
-        req.session.user = null;
-        req.session.save(function (err) {
-            if (err)
-                next(err);
-            req.session.regenerate(function (err) {
-                if (err)
-                    next(err);
-            });
-        });
-        res.status(200).json({ message: "Logged out" });
-    }
-    catch (error) {
-        console.error("Login error:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
 });
 router.get("/validate-session", async (req, res) => {
     if (!req.session.user) {
