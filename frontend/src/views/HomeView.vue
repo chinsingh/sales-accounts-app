@@ -178,6 +178,7 @@ const offset = computed(() => Number(limit.value * page.value));
 const { isFetching, error, data } = useFetch(url, { credentials: 'include' }, {refetch: true}).json();
 
 if(error.value) router.push("/login");
+
 async function onPageChange(event: { page: number; }) {
   page.value = event.page;
   console.log(event.page);
