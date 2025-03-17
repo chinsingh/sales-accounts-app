@@ -6,10 +6,10 @@ import accountsRouter from "./routes/accounts.route.js";
 import testRouter from "./routes/test.route.js";
 import session from 'express-session';
 import pg from 'connect-pg-simple';
+import { rateLimit } from "express-rate-limit";
 dotenv.config();
 const app = express();
 //cors
-// const allowedOrigins = process.env.FRONTEND_URL? [process.env.FRONTEND_URL] : [];
 const corsOptions = {
     origin: process.env.FRONTEND_URL,
     credentials: true,
@@ -18,8 +18,17 @@ const corsOptions = {
     exposedHeaders: ["Set-Cookie"]
 };
 app.use(cors(corsOptions));
-app.set('trust proxy', true);
 app.use(express.json());
+app.set("trust proxy", true);
+//other security measures
+app.disable('x-powered-by');
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: parseInt(process.env.API_LIMIT ?? '100'), // for each IP, default 100
+    standardHeaders: "draft-8",
+    legacyHeaders: false,
+});
+app.use(limiter);
 //session
 const PostgresqlStore = pg(session);
 const sessionStore = new PostgresqlStore({
@@ -27,13 +36,14 @@ const sessionStore = new PostgresqlStore({
 });
 app.use(session({
     secret: process.env.SESSION_SECRET ?? "",
+    name: "sessionId", //generic name to avoid fingerprinting
     resave: true,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        sameSite: 'none',
+        sameSite: "none",
         secure: true,
-        maxAge: 432000000 //5 days
+        maxAge: 432000000, //5 days
     },
     store: sessionStore,
 }));
