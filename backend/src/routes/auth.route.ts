@@ -68,7 +68,7 @@ router.post("/login", inputValidate, async (req: Request, res: Response) => {
       res.status(400).json({ error: "Email and password are required" });
       return;
     }
-    
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
@@ -111,30 +111,6 @@ router.get("/logout", function (req, res, next) {
   });
 });
 
-router.delete("/", async function (req, res, next) {
-   if (!req.session.user) {
-     //Session Invalid
-     res.status(401).json({ error: "Unauthorized" });
-     return;
-   }
-
-  try {
-    const isDeleted = await userRepository.getUserByEmail(req.session.user.email);
-    req.session.user = null;
-    req.session.save(function (err) {
-      if (err) next(err);
-
-      req.session.regenerate(function (err) {
-        if (err) next(err);
-      });
-    });
-    res.status(200).json({ message: "Logged out" });
-  }
-  catch (error){
-    console.error("Login error:", error);
-    res.status(500).json({ error: "Internal server error" });    
-  }
-});
 
 
 router.get("/validate-session", async (req: Request, res: Response) => {
