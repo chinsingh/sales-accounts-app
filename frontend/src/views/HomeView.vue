@@ -131,7 +131,7 @@
 
 const logOut = async ()=>{
     try {
-      const apiUrl = `${BACKEND_BASE_URL}/api/v1/user/logout`;
+      const apiUrl = `${BACKEND_BASE_URL}/api/v1/auth/logout`;
       const response: AxiosResponse<any> = await axios.get(apiUrl, {
         withCredentials: true
       });
