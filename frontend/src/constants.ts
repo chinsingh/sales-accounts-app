@@ -1,2 +1,2 @@
-export const BACKEND_BASE_URL: string = 'https://sales-accounts-app.vercel.app'
+export const BACKEND_BASE_URL: string = '';
 // //"https://sales-accounts-app.onrender.com";
