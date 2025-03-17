@@ -29,9 +29,11 @@ The application follows a standard three-tier architecture:
 
 The project is structured as a monorepo with both frontend and backend code in the same GitHub repository, though they are deployed separately.
 
+![Architecture Overview](arch.png)
+
 ### Authentication System
 
-The application implements a custom authentication system with the following endpoints:
+The system provides the following endpoints:
 
 | Endpoint | Method | Description | Request Body |
 |----------|--------|-------------|-------------|
@@ -42,9 +44,10 @@ The application implements a custom authentication system with the following end
 
 #### Authentication Implementation
 
-- **Password Security**: Passwords are hashed using bcrypt
-- **Session Management**: User sessions are stored in PostgreSQL
-- **Authentication Flow**: Basic email/password authentication without third-party libraries
+- **Password Security**: Passwords are hashed using bcrypt, which provides a secure way to hash and compare passwords along with salting.
+- **Session Management**: User sessions are stored in PostgreSQL.
+- **Authentication Flow**: Basic email/password authentication without third-party libraries. This decision was made to avoid unnecessary dependencies for a relatively simple authentication flow, providing better control over the implementation while keeping the codebase lighter.
+
 
 ### Salesforce Integration
 
@@ -55,22 +58,26 @@ The application connects to Salesforce using the jsforce library and OAuth 2.0 p
 | `/api/v1/accounts` | GET | Retrieve accounts list | `limit`, `offset` |
 | `/api/v1/accounts/count` | GET | Get total number of accounts | - |
 
+- The `limit` and `offset` endpoints are provided to handle pagination from the frontend.
+- The `count` endpoint helps calculate the total number of pages which would be required, without fetching all records.
+ 
 ### Frontend Features
 
-- **Account Listing**: Displays all accounts with pagination
-- **Account Details**: Shows detailed information when clicking on an account, including shipping and billing addresses
-- **Pagination**: Dynamically calculates limit and offset based on page selection
+- **Account Listing**: Displays all accounts' details with pagination.
+- **Account Details**: Shows detailed information when clicking on an account, including shipping and billing addresses.
+- **Pagination**: Dynamically calculates `limit` and `offset` based on page selection.
+
 
 ### Security Measures
 
 The application implements several security features:
 
-- **CORS Protection**: Restricts API access to approved origins
+- **CORS Protection**: Restricts API access to only frontend's origin
 - **Rate Limiting**: Prevents abuse through in-memory rate limiting
 - **Input Validation**: Sanitizes and validates all user inputs
-- **Secure Sessions**: Properly configured session cookies
+- **Secure Sessions**: httpOnly and secure session cookies
 
-## Database Schema
+## Database Connectivity and Schema
 
 The application uses the following tables:
 
@@ -93,10 +100,10 @@ Follow these steps to set up the project locally:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:chinsingh/sales-accounts-app.git
    ```
 
-2. Create a `.env` file in the root directory (use `.env.example` as a template)
+2. Create a `.env` file in the `backend` directory (use [.env.example](backend/.env.example) as a template)
 
 3. Start the backend server:
    ```bash
