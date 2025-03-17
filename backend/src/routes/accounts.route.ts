@@ -1,6 +1,5 @@
-import sfAccounts from "../services/sf-accounts.service";
+import sfAccounts from "../services/sf-accounts.service.js";
 import express, {Request, Response} from "express";
-import userRepository from "../repositories/user.repository";
 
 
 const router = express.Router();

@@ -13,9 +13,8 @@ const app = express();
 const corsOptions = {
     origin: process.env.FRONTEND_URL,
     credentials: true,
-    methods: ["GET", "POST", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-    exposedHeaders: ["Set-Cookie"]
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 };
 app.use(cors(corsOptions));
 app.set('trust proxy', true);
