@@ -15,8 +15,10 @@ const corsOptions = {
     credentials: true,
     methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type"],
+    exposedHeaders: ["Set-Cookie"]
 };
 app.use(cors(corsOptions));
+app.set('trust proxy', true);
 app.use(express.json());
 //session
 const PostgresqlStore = pg(session);
@@ -26,12 +28,11 @@ const sessionStore = new PostgresqlStore({
 app.use(session({
     secret: process.env.SESSION_SECRET ?? "",
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        domain: 'onrender.com',
         httpOnly: true,
-        sameSite: 'lax',
-        secure: false,
+        sameSite: 'none',
+        secure: true,
         maxAge: 432000000 //5 days
     },
     store: sessionStore,
