@@ -26,7 +26,7 @@ app.use(express.json());
 app.set("trust proxy", true);
 
 //other security measures
-app.disable('x-powered-by');
+// app.disable('x-powered-by');
 
 
 //since the service is behind a proxy, this constitutes a global rate limiting to prevent salesforce API limit from breaching
